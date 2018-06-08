@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 import sys
-from obspy.io.kinemetrics import evt
 HOME="/home/seiscomp/"
 LOGFILE="%s/plugins_python/samDB/samDB.log" %HOME
 sys.path.append("%s/seiscomp3/share/gds/tools/" %HOME)  
@@ -26,9 +25,12 @@ class samDBFilter(filter.Filter):
         
         b=bulletin.Bulletin()
         
-        evt=self.parseEventParameters(ep)
+        e=self.parseEventParameters(ep)
         
-        b.plain=evt
+        #b.plain="""VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')\
+        #""" %(e["evid"],e["lat"],e["lon"],e["desc"],e["magVal"],e["magType"],e["timeSec"],e["timeNow"],e["depth"],e["stat"],e["rev"],e["dloc"],e["hloc"])
+        
+        b.plain=str(e)
         
         return str(b)
         
