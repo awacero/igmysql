@@ -42,7 +42,7 @@ class SpoolSendSamDB(spooler.Spooler):
             b=bulletin.Bulletin()
             b.read(content)
         except Exception, e:
-            raise Exception("Error starting spool(): %s" %str(e))
+            raise Exception("##Error starting spool(): %s" %str(e))
 
         for a in addresses:
 
@@ -57,7 +57,7 @@ class SpoolSendSamDB(spooler.Spooler):
 
             try:
                 dbCon=DBConexion.create_conexionDB(db["host"],db["port"],db["user"],db["pass"],db["DBName"])              
-                logger.info("DB conexion to %s created" %db)
+                logger.info("##DB conexion to %s created" %db)
                 logger.info("##Insert or update in DB")                
                 edict=ast.literal_eval(b.plain)
                 DBConexion.insert_row(dbCon,edict) 

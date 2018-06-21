@@ -12,8 +12,6 @@ logging.basicConfig(filename=LOGFILE,format='%(asctime)s %(levelname)s %(message
 
 import MySQLdb
 
-
-
 def create_conexionDB(DBHost,port,user,pwd,DBName):
     try:
         conexion=MySQLdb.connect(host=DBHost,user=user,passwd=pwd,port=int(port),db=DBName)
@@ -21,7 +19,6 @@ def create_conexionDB(DBHost,port,user,pwd,DBName):
     except Exception as e:
         logging.info("Error in create_ConexionDB(): %s" %str(e))
         return -1
-
 
 def insert_row(conn,e):
     try:
@@ -32,18 +29,11 @@ def insert_row(conn,e):
         VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s') ON DUPLICATE KEY UPDATE \
         latitude='%s',longitude='%s',description='%s',magVal='%s',magType='%s',timestampSec='%s',timestampNow='%s',depth='%s',status='%s',revision='%s',localizacion='%s',horaLocal='%s' 
         """ %(e["evid"],e["lat"],e["lon"],e["desc"],e["magVal"],e["magType"],e["timeSec"],e["timeNow"],e["depth"],e["stat"],e["rev"],e["dloc"],e["hloc"],e["lat"],e["lon"],e["desc"],e["magVal"],e["magType"],e["timeSec"],e["timeNow"],e["depth"],e["stat"],e["rev"],e["dloc"],e["hloc"])
-        
-        #query_str="INSERT INTO gaps_overlaps (estacion,fecha,gaps_d,gaps_c,over_d,over_c) VALUES('%s','%s','%s','%s','%s','%s')" \
-        #%(dct['cod'],str(dct['dutc'].datetime),dct['cha_k']['gaps_d'],dct['cha_k']['gaps_c'], dct['cha_k']['over_d'],dct['cha_k']['over_c'] )
-        
-        logging.info("###QUERY TO TEST:%s" %query_str)
-
-        #'''
+               
         query.execute(query_str)
         conn.commit()
         logging.info("insert_row() OK")
         conn.close()
-        #'''
         
     except Exception as ex:
         logging.info("Error in insert_row() %s " %(str(ex)))

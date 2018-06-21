@@ -22,16 +22,9 @@ class samDBFilter(filter.Filter):
     def filter(self,ep):
         
         logging.info("Starting filter for samDB")
-        
-        b=bulletin.Bulletin()
-        
-        e=self.parseEventParameters(ep)
-        
-        #b.plain="""VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')\
-        #""" %(e["evid"],e["lat"],e["lon"],e["desc"],e["magVal"],e["magType"],e["timeSec"],e["timeNow"],e["depth"],e["stat"],e["rev"],e["dloc"],e["hloc"])
-        
+        b=bulletin.Bulletin() 
+        e=self.parseEventParameters(ep)     
         b.plain=str(e)
-        
         return str(b)
         
 
@@ -91,7 +84,6 @@ class samDBFilter(filter.Filter):
             
             eventDict['rev']    = '1'
             eventDict['dloc']   = distancia.closest_distance(origin.latitude().value(),origin.longitude().value())
-            
             
         return eventDict
 
