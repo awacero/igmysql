@@ -1,1 +1,16 @@
 This project contains the source code used to store in a mysql DB information of an event, this information will be used by the SAM server. 
+
+#filter_samDB.py 
+Take an event object and transform it to a python dictionary  
+
+#send_samDB.py 
+Take the python dict and insert/update in a Mysql db.  
+
+#send_samDB.cfg 
+Configuration file for the send_samDB module 
+
+#samDB.sql 
+SQL file to create the DB and table 
+
+#samDB.json
+File with the DB's information.  
