@@ -1,6 +1,6 @@
 #!/usr/bin/python
-import sys
-HOME='/home/seiscomp/'
+import sys,os
+HOME=os.getenv("HOME")
 sys.path.append('/%s/seiscomp3/share/gds/tools/' %HOME)
 
 import json
@@ -8,8 +8,6 @@ import DBConexion
 import ast
 
 from lib import bulletin, logger, spooler
-
-
 
 class samDBConfig:
     def __init__(self,config):
@@ -56,8 +54,9 @@ class SpoolSendSamDB(spooler.Spooler):
                 raise Exception("##Error reading samDB.json: %s" %str(e))
 
             try:
-                dbCon=DBConexion.create_conexionDB(db["host"],db["port"],db["user"],db["pass"],db["DBName"])              
-                logger.info("##DB conexion to %s created" %db)
+                dbCon=DBConexion.create_conexionDB(db["host"],db["port"],db["user"],db["pass"],db["DBName"]) 
+                             
+                logger.info("##DB conexion to %s created" %db['DBName'])
                 logger.info("##Insert or update in DB")                
                 edict=ast.literal_eval(b.plain)
                 DBConexion.insert_row(dbCon,edict) 

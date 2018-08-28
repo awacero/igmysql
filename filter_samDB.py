@@ -1,7 +1,8 @@
 #!/usr/bin/python
 
-import sys
-HOME="/home/seiscomp/"
+import sys,os
+HOME=os.getenv("HOME")
+
 LOGFILE="%s/plugins_python/samDB/samDB.log" %HOME
 sys.path.append("%s/seiscomp3/share/gds/tools/" %HOME)  
 
@@ -15,7 +16,6 @@ from datetime import datetime, timedelta
 import seiscomp3.Core
 import seiscomp3.DataModel
 from lib import bulletin, filter, logger 
-
 
 class samDBFilter(filter.Filter):
     

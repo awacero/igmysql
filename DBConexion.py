@@ -1,10 +1,8 @@
 
-
-import sys
-HOME="/home/seiscomp/"
+import sys,os
+HOME=os.getenv("HOME")
 LOGFILE="%s/plugins_python/samDB/samDB.log" %HOME
 sys.path.append("%s/seiscomp3/share/gds/tools/" %HOME)  
-
 
 import logging 
 logging.basicConfig(filename=LOGFILE,format='%(asctime)s %(levelname)s %(message)s',level=logging.INFO)
@@ -18,7 +16,7 @@ def create_conexionDB(DBHost,port,user,pwd,DBName):
         return conexion
     except Exception as e:
         logging.info("Error in create_ConexionDB(): %s" %str(e))
-        return -1
+        raise Exception("Error accessing the server: %s" %str(e))
 
 def insert_row(conn,e):
     try:
@@ -37,7 +35,7 @@ def insert_row(conn,e):
         
     except Exception as ex:
         logging.info("Error in insert_row() %s " %(str(ex)))
-        return -1
+        raise Exception("Error accessing the server: %s" %str(ex))
 
 def delete_row(conn,evID):
     
