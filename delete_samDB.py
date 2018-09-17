@@ -1,6 +1,7 @@
+#!/usr/bin/python
+import os
 
-
-HOME="/home/seiscomp/"
+HOME=os.getenv("HOME")
 LOGFILE="%s/plugins_python/samDB/delete_samDB.log" %HOME
 CONFILE="%s/plugins_python/samDB/send_samDB.cfg" %HOME
 import logging 
@@ -40,5 +41,5 @@ def deleteEvent(evID,DBname):
         logging.info("Error deleting from DB: %s" %str(e))
 
 
-deleteEvent('igepn2018ltil','DEVMYSQL')
+#deleteEvent('igepn2018ltil','DEVMYSQL')
       
