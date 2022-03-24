@@ -3,6 +3,7 @@
 CREATE DATABASE samDB; 
 
 GRANT ALL PRIVILEGES ON samDB.* to 'sc3sam'@'localhost' IDENTIFIED BY '****'; 
+GRANT ALL PRIVILEGES ON samDB.* to 'sc3sam'@'%s' IDENTIFIED BY '****'; 
 
 USE samDB; 
 
