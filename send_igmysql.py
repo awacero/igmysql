@@ -1,21 +1,30 @@
-#!/usr/bin/python
-import sys,os
-HOME=os.getenv("HOME")
-sys.path.append('/%s/seiscomp3/share/gds/tools/' %HOME)
+#!/usr/bin/env seiscomp-python
 
+
+import sys,os
+sys.path.append( os.path.join(os.environ['SEISCOMP_ROOT'],'share/gds/tools/'))
+
+from lib import bulletin, spooler
 import json
 import DBConexion 
 import ast
 
-from lib import bulletin, logger, spooler
+import logging
+import logging.config
+
+logging_file = os.path.join(os.environ['SEISCOMP_ROOT'],'var/log/','gds_service_igmysql.log')
+logging.basicConfig(filename=logging_file, format='%(asctime)s %(message)s')
+logger = logging.getLogger("igmysql")
+logger.setLevel(logging.DEBUG)
+
 
 class samDBConfig:
     def __init__(self,config):
         prefix='json'
         try:
-            self.samDBFile=config.get(prefix,"samDBFile")
+            self.samDBFile=config.get(prefix,"sam_db_credential")
         except:
-            logger.info("##There is no samDBFile Defined")
+            logger.info("##There is no sam_db_credential defined")
             self.samDBFile=None
 
 class SpoolSendSamDB(spooler.Spooler):
@@ -39,8 +48,8 @@ class SpoolSendSamDB(spooler.Spooler):
         try:
             b=bulletin.Bulletin()
             b.read(content)
-        except Exception, e:
-            raise Exception("##Error starting spool(): %s" %str(e))
+        except Exception as e:
+            raise Exception("##Error starting spool(): %s" %(e))
 
         for a in addresses:
 
@@ -50,8 +59,8 @@ class SpoolSendSamDB(spooler.Spooler):
                 db=DBs[a[1]]
                 logger.info("##Storing in DB: %s " %db)
             except Exception as e:
-                self.addTargetError(a[0],a[1],str(e))
-                raise Exception("##Error reading samDB.json: %s" %str(e))
+                self.addTargetError(a[0],a[1],(e))
+                raise Exception("##Error reading samDB.json: %s" %(e))
 
             try:
                 dbCon=DBConexion.create_conexionDB(db["host"],db["port"],db["user"],db["pass"],db["DBName"]) 
@@ -63,8 +72,8 @@ class SpoolSendSamDB(spooler.Spooler):
 
             except Exception as e:
                 
-                self.addTargetError(a[0],a[1],str(e))
-                raise Exception("##Error inserting in DB : %s" %str(e))
+                self.addTargetError(a[0],a[1],(e))
+                raise Exception("##Error inserting in DB : %s" %(e))
 
 if __name__=="__main__":
     app=SpoolSendSamDB()
