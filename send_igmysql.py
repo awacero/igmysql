@@ -30,6 +30,7 @@ class samDBConfig:
 class SpoolSendSamDB(spooler.Spooler):
 
     def __init__(self):
+        logger.info("##CTM llega")
         spooler.Spooler.__init__(self)
         self._conf=samDBConfig(self._config)
         logger.info("##Configuration File Loaded")
@@ -38,7 +39,7 @@ class SpoolSendSamDB(spooler.Spooler):
         try:
             with open(json_file) as json_data_files:
                 return json.load(json_data_files)
-        except Exception, e:
+        except Exception as e:
             raise Exception("##Error while reading XML _readServerFile()")       
     
     def spool(self,addresses,content):

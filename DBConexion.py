@@ -5,7 +5,7 @@ LOGFILE="%s/plugins_python/samDB/samDB.log" %HOME
 sys.path.append("%s/seiscomp3/share/gds/tools/" %HOME)  
 
 import logging 
-logging.basicConfig(filename=LOGFILE,format='%(asctime)s %(levelname)s %(message)s',level=logging.INFO)
+#logging.basicConfig(filename=LOGFILE,format='%(asctime)s %(levelname)s %(message)s',level=logging.INFO)
 
 
 import MySQLdb
@@ -26,7 +26,8 @@ def insert_row(conn,e):
         query_str="""INSERT INTO events (eventID,latitude,longitude,description,magVal,magType,timestampSec,timestampNow,depth,status,revision,localizacion,horaLocal)\
         VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s') ON DUPLICATE KEY UPDATE \
         latitude='%s',longitude='%s',description='%s',magVal='%s',magType='%s',timestampSec='%s',timestampNow='%s',depth='%s',status='%s',revision='%s',localizacion='%s',horaLocal='%s' 
-        """ %(e["evid"],e["lat"],e["lon"],e["desc"],e["magVal"],e["magType"],e["timeSec"],e["timeNow"],e["depth"],e["stat"],e["rev"],e["dloc"],e["hloc"],e["lat"],e["lon"],e["desc"],e["magVal"],e["magType"],e["timeSec"],e["timeNow"],e["depth"],e["stat"],e["rev"],e["dloc"],e["hloc"])
+        """ %(e["id"],e["lat"],e["lon"],e["description"],e["magVal"],e["magType"],e["timeSec"],e["timeNow"],e["depth"],e["status"],e["revision"],e["nearest_city"],e["local_time"],
+        e["lat"],e["lon"],e["description"],e["magVal"],e["magType"],e["timeSec"],e["timeNow"],e["depth"],e["status"],e["revision"],e["nearest_city"],e["local_time"])
                
         query.execute(query_str)
         conn.commit()
